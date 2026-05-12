@@ -763,6 +763,38 @@ Traefik chua chay
 path /api bi sai
 ```
 
+### Sync Failed Vi Job backend-migration Immutable
+
+Neu Argo CD bao loi:
+
+```text
+Job.batch "backend-migration" is invalid: spec.template: field is immutable
+```
+
+Nghia la migration Job cu da ton tai, nhung image/tag moi lam thay doi `spec.template`. Kubernetes khong cho patch template cua Job.
+
+Fix nhanh tren VPS:
+
+```bash
+kubectl -n apps-prod delete job backend-migration
+```
+
+Sau do vao Argo CD:
+
+```text
+backend-prod
+-> Sync
+```
+
+Manifest migration Job da duoc them Argo CD hook:
+
+```yaml
+argocd.argoproj.io/hook: PreSync
+argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+```
+
+Tu cac lan sync sau, Argo CD se tao migration Job moi truoc khi sync app, va don Job cu de tranh loi immutable.
+
 ## 17. Checklist Tren VPS
 
 ```text
