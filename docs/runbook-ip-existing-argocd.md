@@ -629,7 +629,7 @@ kubectl -n apps-prod run curl-test --rm -it --image=curlimages/curl -- sh
 Trong shell cua pod:
 
 ```bash
-curl http://backend:3000/health
+curl http://backend:3000/api/health
 curl http://backend:3000/api/todos
 exit
 ```
