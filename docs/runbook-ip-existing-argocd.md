@@ -201,6 +201,90 @@ images:
 
 Neu GHCR package private, K8s se bi `ImagePullBackOff`. De hoc nhanh, nen set package public truoc.
 
+## 5.1. Tao Version Image Bang Git Tag
+
+Workflow backend/frontend da ho tro version tag dang:
+
+```text
+v1.0.0
+v1.0.1
+v1.1.0
+```
+
+Khi push len branch `main`, workflow se tao:
+
+```text
+ghcr.io/shynsg/todo-backend:latest
+ghcr.io/shynsg/todo-backend:<short-sha>
+ghcr.io/shynsg/todo-backend:v0.0.<github-run-number>
+```
+
+Khi push Git tag `v1.0.1`, workflow se tao them:
+
+```text
+ghcr.io/shynsg/todo-backend:v1.0.1
+```
+
+Neu muon auto version, chi can push `main`.
+
+Vi du backend:
+
+```bash
+cd lesson-12-capstone-platform/source/todo-backend
+git add .
+git commit -m "update backend"
+git push origin main
+```
+
+Sau khi workflow chay xong, vao GitHub Actions lay run number. Vi du run number la `42`, image tag se la:
+
+```text
+ghcr.io/shynsg/todo-backend:v0.0.42
+```
+
+Vi du frontend:
+
+```bash
+cd lesson-12-capstone-platform/source/todo-frontend
+git add .
+git commit -m "update frontend"
+git push origin main
+```
+
+Neu frontend workflow run number la `27`, image tag se la:
+
+```text
+ghcr.io/shynsg/todo-frontend:v0.0.27
+```
+
+Sau khi GitHub Actions green, sua platform repo:
+
+```yaml
+images:
+  - name: ghcr.io/shynsg/todo-backend
+    newTag: v0.0.42
+  - name: ghcr.io/shynsg/todo-frontend
+    newTag: v0.0.27
+```
+
+Push platform repo:
+
+```bash
+cd lesson-12-capstone-platform/todo-platform
+git add apps/backend-stack/overlays/prod/kustomization.yaml
+git commit -m "release auto version images"
+git push
+```
+
+Argo CD se sync va Kubernetes se rollout Pod moi.
+
+Neu muon version dep kieu `v1.0.1`, van co the push Git tag thu cong:
+
+```bash
+git tag v1.0.1
+git push origin v1.0.1
+```
+
 ## 6. Kiem Tra Todo Platform Repo
 
 Argo CD can doc repo GitOps/platform, vi du:
