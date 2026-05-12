@@ -6,6 +6,6 @@ resources:
   - ../../base
 images:
   - name: ghcr.io/shynsg/todo-backend
-    newTag: v1.0
+    newTag: latest
   - name: ghcr.io/shynsg/todo-frontend
-    newTag: v1.0
+    newTag: latest
