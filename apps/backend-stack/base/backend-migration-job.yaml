@@ -9,7 +9,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: migration
-          image: ghcr.io/shynsg/todo-backend:latest
+          image: ghcr.io/shynsg/todo-backend:v0.0.3
           imagePullPolicy: IfNotPresent
           command: ["npm", "run", "migrate"]
           envFrom:
