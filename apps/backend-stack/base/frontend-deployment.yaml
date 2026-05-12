@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/shynsg/todo-frontend:latest
+          image: ghcr.io/shynsg/todo-frontend:v0.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
