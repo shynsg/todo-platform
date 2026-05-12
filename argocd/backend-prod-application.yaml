@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/YOUR_ORG/YOUR_REPO.git
     targetRevision: main
-    path: lesson-12-capstone-platform/apps/backend-stack/overlays/prod
+    path: apps/backend-stack/overlays/prod
   destination:
     server: https://kubernetes.default.svc
     namespace: apps-prod

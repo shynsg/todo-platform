@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/YOUR_ORG/todo-backend:CHANGE_ME
+          image: ghcr.io/shynsg/todo-backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

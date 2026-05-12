@@ -4,10 +4,8 @@ namespace: apps-prod
 resources:
   - namespace.yaml
   - ../../base
-patches:
-  - path: ingress-patch.yaml
 images:
-  - name: ghcr.io/YOUR_ORG/todo-backend
-    newTag: CHANGE_ME
-  - name: ghcr.io/YOUR_ORG/todo-frontend
-    newTag: CHANGE_ME
+  - name: ghcr.io/shynsg/todo-backend
+    newTag: v1.0
+  - name: ghcr.io/shynsg/todo-frontend
+    newTag: v1.0
