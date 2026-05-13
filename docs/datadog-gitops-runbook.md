@@ -194,6 +194,37 @@ Mo Argo CD:
 http://SERVER_IP/argocd
 ```
 
+Neu trong `New App` mày khong thay field `Chart`, dung cach CLI o muc 6.2 cho nhanh va chuan hon. Nguyen nhan thuong la Argo CD UI dang nhan source la Git repository, khong phai Helm repository.
+
+### 6.1. Cach UI
+
+Truoc het add Helm repo vao Argo CD:
+
+```text
+Settings
+-> Repositories
+-> Connect Repo
+```
+
+O man hinh `Choose your connection method`, chon:
+
+```text
+VIA HTTP/HTTPS
+```
+
+Dung, no nghe giong Git HTTPS, nhung Helm repo cung la HTTP/HTTPS repo.
+
+Dien:
+
+```text
+Repository Type: helm
+Name: datadog
+Project: default
+Repository URL: https://helm.datadoghq.com
+```
+
+Neu UI cua mày khong co field `Repository Type`, hoac khong co option `helm`, bo qua UI repo connect va dung cach 6.2.
+
 Tao app thu nhat:
 
 ```text
@@ -211,14 +242,19 @@ Prune Resources: checked
 Self Heal: checked
 Repository URL: https://helm.datadoghq.com
 Chart: datadog-operator
-Version: 2.22.2
+Target Revision: 2.22.2
 Cluster URL: https://kubernetes.default.svc
 Namespace: datadog
 ```
 
+Voi Helm chart, `Target Revision` khong phai branch Git. No la chart version.
+
 Neu UI hien Helm Values, dien:
 
 ```yaml
+apiKeyExistingSecret: datadog-secret
+clusterName: k3s-vps-learning
+site: us5.datadoghq.com
 installCRDs: true
 ```
 
@@ -228,6 +264,55 @@ Sau do:
 Create
 -> Sync
 ```
+
+### 6.2. Cach CLI De Khoi Bi UI Lam Roi
+
+Neu UI cua mày khong hien `Chart`, chay thang file Application:
+
+```bash
+cd lesson-12-capstone-platform/todo-platform
+kubectl apply -f argocd/datadog-operator-application.yaml
+```
+
+Neu Argo CD bao chua biet Helm repo, add repo bang Kubernetes Secret:
+
+```bash
+kubectl -n argocd apply -f - <<'EOF'
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repo-datadog-helm
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: datadog
+  url: https://helm.datadoghq.com
+EOF
+```
+
+Roi apply lai:
+
+```bash
+kubectl apply -f argocd/datadog-operator-application.yaml
+```
+
+File nay da khai bao day du:
+
+```yaml
+source:
+  repoURL: https://helm.datadoghq.com
+  chart: datadog-operator
+  targetRevision: 2.22.2
+  helm:
+    values: |
+      apiKeyExistingSecret: datadog-secret
+      clusterName: k3s-vps-learning
+      site: us5.datadoghq.com
+      installCRDs: true
+```
+
+Nen khong can dien branch.
 
 Cho Operator Ready:
 

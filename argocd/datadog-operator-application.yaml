@@ -13,6 +13,9 @@ spec:
     targetRevision: 2.22.2
     helm:
       values: |
+        apiKeyExistingSecret: datadog-secret
+        clusterName: k3s-vps-learning
+        site: us5.datadoghq.com
         installCRDs: true
   destination:
     server: https://kubernetes.default.svc
