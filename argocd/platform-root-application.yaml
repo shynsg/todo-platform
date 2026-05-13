@@ -1,20 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: backend-prod
+  name: platform-root
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/shynsg/todo-platform.git
     targetRevision: main
-    path: apps/backend-stack/overlays/prod
+    path: argocd
   destination:
     server: https://kubernetes.default.svc
-    namespace: apps-prod
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - ServerSideApply=true

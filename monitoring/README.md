@@ -1,42 +1,28 @@
 # Monitoring For 6GB Server
 
-Start light.
+Capstone platform dung monitoring nhe truoc.
 
-## Phase 1: Metrics Server
+Thu tu hoc:
 
-Install metrics-server:
-
-```bash
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```text
+Lesson 13: metrics-server + kubectl top + debug workflow
+Lesson 14: Datadog Agent bang GitOps
+Lesson 15: Datadog logs, APM, dashboard, alert
 ```
 
-Check:
+Metrics-server GitOps manifest nam tai:
 
-```bash
-kubectl top nodes
-kubectl top pods -A
+```text
+./metrics-server
+../argocd/metrics-server-application.yaml
+../docs/metrics-server-gitops-runbook.md
 ```
 
-## Phase 2: Logs
+Doc lesson 13 tai:
 
-Bat dau bang:
-
-```bash
-kubectl logs
-journalctl -u k3s
+```text
+../../../lesson-13-monitoring-basic/README.md
+../../../lesson-13-monitoring-basic/COMMANDS.md
 ```
 
-Sau do co the them Loki/Grafana neu server con du RAM.
-
-## Phase 3: Prometheus/Grafana
-
-Dung Helm chart `kube-prometheus-stack`, nhung can tune resource.
-
-Tren server 6GB, chi cai khi da on dinh app chinh.
-
-```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-```
-
-Sau do tao values nhe rieng truoc khi install.
+Khong nen self-host kube-prometheus-stack full tren VPS 6GB cho bai nay. Production team nho thuong dung Datadog/New Relic/Grafana Cloud de giam cong van hanh.
