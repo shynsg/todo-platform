@@ -12,7 +12,14 @@ spec:
         secretName: "datadog-secret"
         keyName: "api-key"
     tags:
-      - "env:dev"
+      - "env:prod"
+    kubernetesResourcesLabelsAsTags:
+      pods:
+        app: service
+        app.kubernetes.io/name: service
+      deployments.apps:
+        app: service
+        app.kubernetes.io/name: service
   features:
     clusterChecks:
       enabled: true
@@ -34,11 +41,11 @@ spec:
               - name: "DD_RUM_ENABLED"
                 value: "true"
               - name: "DD_RUM_APPLICATION_ID"
-                value: "c8f4ae83-cb01-4bd3-9f58-1b90cefbeaec"
+                value: "a1432b80-8baf-4e21-9572-61360e5ed6de"
               - name: "DD_RUM_CLIENT_TOKEN"
-                value: "pub93489e828bcad24891dadce0f97c1d16"
+                value: "pubca550527baba8b28bc73e591d12898a1"
               - name: "DD_RUM_REMOTE_CONFIGURATION_ID"
-                value: "a5d6330b-e281-4117-92bf-b4069e83e923"
+                value: "128cd03d-c59f-4625-93ec-0e23cbfb21a9"
               - name: "DD_RUM_SITE"
                 value: "us5.datadoghq.com"
     logCollection:
@@ -53,3 +60,8 @@ spec:
         - containerPort: 4318
           hostPort: 4318
           name: "otel-http"
+    autoscaling:
+      workload:
+        enabled: true
+    eventCollection:
+      unbundleEvents: true

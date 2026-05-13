@@ -8,4 +8,4 @@ images:
   - name: ghcr.io/shynsg/todo-backend
     newTag: v0.0.3
   - name: ghcr.io/shynsg/todo-frontend
-    newTag: v0.0.2
+    newTag: v0.0.3
