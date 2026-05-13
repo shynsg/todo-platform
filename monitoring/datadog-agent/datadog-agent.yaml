@@ -1,0 +1,53 @@
+kind: "DatadogAgent"
+apiVersion: "datadoghq.com/v2alpha1"
+metadata:
+  name: "datadog"
+  namespace: "datadog"
+spec:
+  global:
+    clusterName: "k3s-vps-learning"
+    site: "us5.datadoghq.com"
+    credentials:
+      apiSecret:
+        secretName: "datadog-secret"
+        keyName: "api-key"
+  features:
+    clusterChecks:
+      enabled: true
+    orchestratorExplorer:
+      enabled: true
+    apm:
+      instrumentation:
+        enabled: true
+        targets:
+          - name: "default-target"
+            ddTraceVersions:
+              java: "1"
+              python: "4"
+              js: "5"
+              php: "1"
+              dotnet: "3"
+              ruby: "2"
+            ddTraceConfigs:
+              - name: "DD_RUM_ENABLED"
+                value: "true"
+              - name: "DD_RUM_APPLICATION_ID"
+                value: "c8f4ae83-cb01-4bd3-9f58-1b90cefbeaec"
+              - name: "DD_RUM_CLIENT_TOKEN"
+                value: "pub93489e828bcad24891dadce0f97c1d16"
+              - name: "DD_RUM_REMOTE_CONFIGURATION_ID"
+                value: "a5d6330b-e281-4117-92bf-b4069e83e923"
+              - name: "DD_RUM_SITE"
+                value: "us5.datadoghq.com"
+    logCollection:
+      enabled: true
+      containerCollectAll: true
+    otelCollector:
+      enabled: true
+      ports:
+        - containerPort: 4317
+          hostPort: 4317
+          name: "otel-grpc"
+        - containerPort: 4318
+          hostPort: 4318
+          name: "otel-http"
