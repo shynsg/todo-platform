@@ -9,6 +9,7 @@ metadata:
     tags.datadoghq.com/service: todo-backend
     tags.datadoghq.com/version: v0.0.3
 spec:
+  revisionHistoryLimit: 3
   replicas: 2
   selector:
     matchLabels:
