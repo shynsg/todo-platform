@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/shynsg/todo-frontend:v0.0.3
+          image: ghcr.io/shynsg/todo-frontend:v0.0.4
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -26,13 +26,13 @@ spec:
               path: /
               port: http
             initialDelaySeconds: 3
-            periodSeconds: 5
+            periodSeconds: 30
           livenessProbe:
             httpGet:
               path: /
               port: http
             initialDelaySeconds: 10
-            periodSeconds: 10
+            periodSeconds: 30
           resources:
             requests:
               cpu: 50m

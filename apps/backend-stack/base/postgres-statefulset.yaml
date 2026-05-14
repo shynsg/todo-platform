@@ -29,12 +29,12 @@ spec:
             exec:
               command: ["pg_isready", "-U", "postgres", "-d", "app"]
             initialDelaySeconds: 5
-            periodSeconds: 5
+            periodSeconds: 30
           livenessProbe:
             exec:
               command: ["pg_isready", "-U", "postgres", "-d", "app"]
             initialDelaySeconds: 20
-            periodSeconds: 10
+            periodSeconds: 30
           resources:
             requests:
               cpu: 100m
