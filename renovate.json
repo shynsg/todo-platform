@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "enabledManagers": ["kustomize"],
-  "labels": ["dependencies", "gitops", "backend"],
+  "labels": ["dependencies", "gitops"],
   "prHourlyLimit": 4,
   "prConcurrentLimit": 4,
   "packageRules": [
@@ -18,14 +18,26 @@
       "branchTopic": "todo-backend-image"
     },
     {
-      "description": "Do not update the other app images yet while Lesson 15 focuses on backend first",
+      "description": "Open PRs for frontend image updates in the Kustomize production overlay",
       "matchManagers": ["kustomize"],
       "matchDatasources": ["docker"],
-      "matchPackageNames": [
-        "ghcr.io/shynsg/todo-frontend",
-        "ghcr.io/shynsg/todo-notification"
-      ],
-      "enabled": false
+      "matchPackageNames": ["ghcr.io/shynsg/todo-frontend"],
+      "matchFileNames": ["apps/backend-stack/overlays/prod/kustomization.yaml"],
+      "versioning": "semver",
+      "automerge": false,
+      "commitMessageTopic": "todo-frontend image",
+      "branchTopic": "todo-frontend-image"
+    },
+    {
+      "description": "Open PRs for notification image updates in the Kustomize production overlay",
+      "matchManagers": ["kustomize"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/shynsg/todo-notification"],
+      "matchFileNames": ["apps/backend-stack/overlays/prod/kustomization.yaml"],
+      "versioning": "semver",
+      "automerge": false,
+      "commitMessageTopic": "todo-notification image",
+      "branchTopic": "todo-notification-image"
     }
   ]
 }
