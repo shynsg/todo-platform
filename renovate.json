@@ -1,0 +1,31 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["kustomize"],
+  "labels": ["dependencies", "gitops", "backend"],
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 4,
+  "packageRules": [
+    {
+      "description": "Open PRs for backend image updates in the Kustomize production overlay",
+      "matchManagers": ["kustomize"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/shynsg/todo-backend"],
+      "matchFileNames": ["apps/backend-stack/overlays/prod/kustomization.yaml"],
+      "versioning": "semver",
+      "automerge": false,
+      "commitMessageTopic": "todo-backend image",
+      "branchTopic": "todo-backend-image"
+    },
+    {
+      "description": "Do not update the other app images yet while Lesson 15 focuses on backend first",
+      "matchManagers": ["kustomize"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "ghcr.io/shynsg/todo-frontend",
+        "ghcr.io/shynsg/todo-notification"
+      ],
+      "enabled": false
+    }
+  ]
+}
