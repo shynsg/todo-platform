@@ -10,7 +10,7 @@ metadata:
     tags.datadoghq.com/version: v0.0.1
 spec:
   revisionHistoryLimit: 3
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: notification
@@ -36,6 +36,25 @@ spec:
           env:
             - name: PORT
               value: "3001"
+            - name: RABBITMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: RABBITMQ_URL
+            - name: TODO_EVENTS_EXCHANGE
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: TODO_EVENTS_EXCHANGE
+            - name: TODO_CREATED_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: TODO_CREATED_QUEUE
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: DD_SERVICE
               value: todo-notification
             - name: DD_ENV
