@@ -7,6 +7,6 @@ data:
   NODE_ENV: production
   REDIS_URL: redis://redis:6379
   NOTIFICATION_SERVICE_URL: http://notification:3001
-  RABBITMQ_URL: amqp://rabbitmq:5672
+  RABBITMQ_URL: amqp://todo:todo@rabbitmq:5672
   TODO_EVENTS_EXCHANGE: todo.events
   TODO_CREATED_QUEUE: notification.todo.created
