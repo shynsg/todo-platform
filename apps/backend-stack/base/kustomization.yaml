@@ -6,6 +6,7 @@ resources:
   - backend-configmap.yaml
   - backend-secret.yaml
   - backend-deployment.yaml
+  - backend-outbox-worker-deployment.yaml
   - backend-service.yaml
   - notification-deployment.yaml
   - notification-service.yaml

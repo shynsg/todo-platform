@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-outbox-worker
+  labels:
+    app: backend-outbox-worker
+    app.kubernetes.io/name: todo-backend-outbox-worker
+    tags.datadoghq.com/env: prod
+    tags.datadoghq.com/service: todo-backend-outbox-worker
+    tags.datadoghq.com/version: v0.0.3
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-outbox-worker
+  template:
+    metadata:
+      annotations:
+        admission.datadoghq.com/enabled: "true"
+        admission.datadoghq.com/js-lib.version: "5"
+      labels:
+        app: backend-outbox-worker
+        app.kubernetes.io/name: todo-backend-outbox-worker
+        tags.datadoghq.com/env: prod
+        tags.datadoghq.com/service: todo-backend-outbox-worker
+        tags.datadoghq.com/version: v0.0.3
+    spec:
+      containers:
+        - name: worker
+          image: ghcr.io/shynsg/todo-backend:v0.0.3
+          imagePullPolicy: IfNotPresent
+          command: ["npm", "run", "outbox:worker"]
+          envFrom:
+            - configMapRef:
+                name: backend-config
+            - secretRef:
+                name: backend-secret
+          env:
+            - name: OUTBOX_POLL_INTERVAL_MS
+              value: "3000"
+            - name: OUTBOX_BATCH_SIZE
+              value: "10"
+            - name: DD_SERVICE
+              value: todo-backend-outbox-worker
+            - name: DD_ENV
+              value: prod
+            - name: DD_VERSION
+              value: v0.0.3
+            - name: DD_LOGS_INJECTION
+              value: "true"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
