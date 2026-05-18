@@ -43,13 +43,9 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              value: todo
-            - name: RABBITMQ_DEFAULT_PASS
-              value: todo
-            - name: RABBITMQ_ERLANG_COOKIE
-              value: todo-learning-cookie
+          envFrom:
+            - secretRef:
+                name: rabbitmq-secret
           ports:
             - name: amqp
               containerPort: 5672

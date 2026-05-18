@@ -16,6 +16,7 @@ resources:
   - postgres-statefulset.yaml
   - redis-service.yaml
   - redis-statefulset.yaml
+  - rabbitmq-secret.yaml
   - rabbitmq-deployment.yaml
   - rabbitmq-service.yaml
   - rabbitmq-management-service.yaml
