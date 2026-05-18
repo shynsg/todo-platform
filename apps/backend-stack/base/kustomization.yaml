@@ -18,4 +18,5 @@ resources:
   - redis-statefulset.yaml
   - rabbitmq-deployment.yaml
   - rabbitmq-service.yaml
+  - rabbitmq-management-service.yaml
   - ingress.yaml
